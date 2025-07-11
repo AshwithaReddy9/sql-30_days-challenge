@@ -1,0 +1,34 @@
+#questionid	name	age	marks
+1	Asha	18	91
+2	Rahul	19	76
+3	Meena	20	84
+4	Harsh	18	65
+5	Neha	21	92
+
+🔍 Try These:
+Show all students and their marks.
+
+Get names of students who scored more than 80.
+
+Get records of students aged under 20.
+
+Show name and age of students who scored between 70 and 90.
+
+Show all info where student name is 'Neha'.//solution
+
+
+
+
+
+
+create table student(name varchar(9),age INT,marks INT);
+desc student;# create's table
+INSERT INTO student VALUES ('Asha', 18, 91);
+INSERT INTO student VALUES ('Rahul', 19, 76);
+INSERT INTO student VALUES ('Meena', 19, 84);
+insert into student values('harsh', 20,65);
+insert into student values('Neha', 21,92);
+desc student;# inserts values into table
+select age from student where age<=20;#student under age less than equal to 20
+select name,age from student where marks between 70 and 90;#students between marks 70 & 90
+select * student where name= student;#neha student details
