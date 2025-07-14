@@ -1,0 +1,83 @@
+
+
+ Basic Filtering
+List all courses taught by either Priya or Amit.
+
+Show courses where enrolled_students are either 45 or 120.
+
+Display all courses with more than 80 students enrolled.
+
+🔹 Pattern Matching (LIKE)
+Find all courses whose names start with 'D'.
+
+Show course names that end with 'Camp'.
+
+List courses where instructor name contains the letter 'e'.
+
+🔹 Range & Negation
+Select courses with students between 50 and 100.
+
+Show all courses not taught by Neha or Ravi.
+
+List courses with students not between 60 and 100.
+
+🔹 Sorting
+Show all courses ordered by enrolled_students in ascending order.
+
+Show courses with more than 60 students, sorted by name descending.
+
+🔹 Bonus Challenge
+Find all courses where:
+
+The course name contains 'Data'
+
+Enrolled students are greater than 70
+
+The instructor is not 'Ravi'
+
+Ordered by students descending
+
+✅ Let me know if you'd like:
+
+A .sql file with the answers
+
+Me to run and show output
+
+Or you try them and I review!
+
+
+
+
+///////////CODE////
+
+
+
+create table course(course varchar(9),students_enrolled int,instructor);
+desc course;
+insert into course values('sqlbootcamp',120,'neha');
+insert into course values('pyhon',666,'ravi');
+insert into course values('Ds',568,'Amit');
+insert into course values('ML',679,'rkr');
+desc course;
+select * from course where students_enrolled in(45,120);
+desc course;
+select * from course where students_enrolled >80;
+desc course;
+select * from course where course like 'D%';
+desc course;
+select * from course where course like '%camp';
+desc course;
+select * from course where instructor like'%e%';
+desc course;
+select * from course where students_enrolled between 50 and 100;
+desc course;
+select * from course where instructor not in('ravi','neha');
+desc course;
+select * from course where students_enrolled not between 60 and 100;
+desc course;
+select * from course order by students_enrolled ASC;
+select * from  course where students_enrolled >60 order by students_enrolled desc;
+desc course;
+select * from course where course like '%Data%' and students_enrolled>70 and instructor not in ('Ravi') order by students_enrolled desc;
+desc course;
+ALTER TABLE course MODIFY course VARCHAR(30);
