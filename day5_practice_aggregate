@@ -1,0 +1,68 @@
+/* =========================================================
+   📅  Day 6 – Aggregations & GROUP BY
+ able   : course
+   Columns : course (VARCHAR) | students_enrolled (INT)
+             instructor (VARCHAR)
+   ========================================================= */
+
+/* ---------- 1.  TABLE & SAMPLE DATA -------------------- */
+CREATE TABLE course (course             VARCHAR(30), students_enrolled  INT,  instructor         VARCHAR(30));
+
+INSERT INTO course VALUES('SQL Bootcamp', 120, 'Neha'), ('Python',       666, 'Ravi'), ('DS',           568, 'Amit'), ('ML',           679, 'RKR');
+   Core Questions
+   ========================================================= */
+
+/* Q1 • How many courses are listed? */
+SELECT COUNT(*) AS total_courses FROM   course;
+
+/* Q2 • Total number of students across all courses */
+SELECT SUM(students_enrolled) AS total_students FROM   course;
+
+/* Q3 • Average number of students per course */
+SELECT AVG(students_enrolled) AS avg_students FROM   course;
+
+/* Q4 • Highest and lowest enrollment values */
+SELECT MAX(students_enrolled) AS max_enrolled, MIN(students_enrolled) AS min_enrolled FROM   course;
+
+/* Q5 • Total students per instructor */
+SELECT instructor, SUM(students_enrolled) AS total_students FROM   course GROUP BY instructor;
+
+/* Q6 • Instructors who teach > 1 course (none yet, but template ready) */
+SELECT instructor,COUNT(*) AS course_count FROM   course GROUP BY instructor HAVING COUNT(*) > 1;
+
+/* =========================================================
+   Advanced Practice
+   ========================================================= */
+
+/* A1 • Show instructor totals only if they have > 1 course */
+SELECT instructor, SUM(students_enrolled) AS total_students FROM   course GROUP BY instructor HAVING COUNT(*) > 1;
+
+/* A2 • Instructors whose average enrollment > 400 */
+SELECT instructor, AVG(students_enrolled) AS avg_students
+FROM   course
+GROUP BY instructor
+HAVING AVG(students_enrolled) > 400;
+
+/* A3 • Group by course‑name length: course count + total students */
+SELECT LENGTH(course)               AS name_length,
+       COUNT(*)                     AS course_count,
+       SUM(students_enrolled)       AS total_students
+FROM   course
+GROUP BY LENGTH(course);
+
+/* A4 • Instructor(s) with the highest single‑course enrollment */
+SELECT instructor, course, students_enrolled
+FROM   course
+WHERE  students_enrolled = (
+        SELECT MAX(students_enrolled)
+        FROM   course
+      );
+
+/* A5 • Instructor share (%) of total enrollment (subquery version) */
+SELECT instructor,
+       ROUND(
+         100.0 * SUM(students_enrolled) /
+         (SELECT SUM(students_enrolled) FROM course), 2
+       ) AS pct_total_students
+FROM   course
+GROUP BY instructor;
