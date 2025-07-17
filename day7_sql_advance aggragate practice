@@ -1,0 +1,28 @@
+-- Total students & average enrolled where count > 1 and avg > 500
+SELECT instructor, COUNT(*) AS total_courses, AVG(students_enrolled) AS avg_std
+FROM course
+GROUP BY instructor
+HAVING COUNT(*) > 1 AND AVG(students_enrolled) > 500;
+
+-- Highest and lowest enrolled students per instructor
+SELECT instructor, MAX(students_enrolled) AS highest_std, MIN(students_enrolled) AS lowest_std
+FROM course
+GROUP BY instructor;
+
+-- Label instructors based on student load
+SELECT instructor,
+       COUNT(*) AS total_course,
+       SUM(students_enrolled) AS total_students,
+       CASE
+           WHEN SUM(students_enrolled) > 1000 THEN 'High Load'
+           WHEN SUM(students_enrolled) BETWEEN 500 AND 1000 THEN 'Medium Load'
+           ELSE 'Low Load'
+       END AS load_label
+FROM course
+GROUP BY instructor;
+
+-- Instructors with avg enrollment > overall average
+SELECT instructor, COUNT(*) AS course_count, AVG(students_enrolled) AS avg_std
+FROM course
+GROUP BY instructor
+HAVING AVG(students_enrolled) > (SELECT AVG(students_enrolled) FROM course);
