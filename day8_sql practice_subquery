@@ -1,0 +1,69 @@
+-- 1. Instructors teaching more than 2 courses
+SELECT instructor, COUNT(*) AS total_course 
+FROM course 
+GROUP BY instructor 
+HAVING COUNT(*) > 2;
+
+-- 2. Average students per instructor
+SELECT instructor, AVG(students_enrolled) AS avg_std 
+FROM course 
+GROUP BY instructor;
+
+-- 3. Instructors with average students enrolled > 500
+SELECT instructor, AVG(students_enrolled) AS avg_std 
+FROM course 
+GROUP BY instructor 
+HAVING AVG(students_enrolled) > 500;
+
+-- 4. Total students and courses per instructor (with more than 1 course)
+SELECT instructor, SUM(students_enrolled) AS total_std, COUNT(*) AS total_course 
+FROM course 
+GROUP BY instructor 
+HAVING COUNT(*) > 1;
+
+-- 5. Instructors with student total < 1500 and more than 2 courses
+SELECT instructor, COUNT(*) AS total_course, SUM(students_enrolled) AS total_std 
+FROM course 
+GROUP BY instructor 
+HAVING SUM(students_enrolled) < 1500 AND COUNT(*) > 2;
+
+-- 6. Instructors with more than 2 courses and avg students < 500
+SELECT instructor, COUNT(*) AS total_course, AVG(students_enrolled) AS avg_std 
+FROM course 
+GROUP BY instructor 
+HAVING COUNT(*) > 2 AND AVG(students_enrolled) < 500;
+
+-- 7. Instructors with load < 1500 & >2 courses, sorted by total students
+SELECT instructor, COUNT(*) AS total_course, SUM(students_enrolled) AS total_std 
+FROM course 
+GROUP BY instructor 
+HAVING SUM(students_enrolled) < 1500 AND COUNT(*) > 2 
+ORDER BY total_std DESC;
+
+-- 8. Instructors with average students above overall average
+SELECT instructor, COUNT(*) AS avg_course, AVG(students_enrolled) AS avg_std 
+FROM course 
+GROUP BY instructor 
+HAVING AVG(students_enrolled) > (SELECT AVG(students_enrolled) FROM course);
+
+-- 9. Max & Min students enrolled per instructor
+SELECT instructor, MAX(students_enrolled), MIN(students_enrolled) 
+FROM course 
+GROUP BY instructor;
+
+-- 10. Categorize instructors by student load (CASE)
+SELECT instructor, 
+       SUM(students_enrolled) AS total_std,
+       CASE 
+           WHEN SUM(students_enrolled) > 1500 THEN 'High Load'
+           WHEN SUM(students_enrolled) < 800 THEN 'Medium Load'
+           ELSE 'Low Load'
+       END AS load_category 
+FROM course 
+GROUP BY instructor;
+
+-- 11. Instructors with total students above overall average
+SELECT instructor, SUM(students_enrolled) AS total_std, AVG(students_enrolled) AS avg_std 
+FROM course 
+GROUP BY instructor 
+HAVING SUM(students_enrolled) > (SELECT AVG(students_enrolled) FROM course);
