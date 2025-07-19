@@ -1,0 +1,74 @@
+-- 1. List each instructor with the total number of courses they are teaching.
+SELECT instructor, COUNT(*) AS total_courses
+FROM course
+GROUP BY instructor;
+
+-- 2. Show instructors who are teaching more than 2 courses.
+SELECT instructor, COUNT(*) AS total_courses
+FROM course
+GROUP BY instructor
+HAVING COUNT(*) > 2;
+
+-- 3. Find the instructors whose average number of students per course is greater than 600.
+SELECT instructor, AVG(students_enrolled) AS avg_std
+FROM course
+GROUP BY instructor
+HAVING AVG(students_enrolled) > 600;
+
+-- 4. Display instructors along with the minimum and maximum students enrolled across their courses.
+SELECT instructor,
+       MIN(students_enrolled) AS min_std,
+       MAX(students_enrolled) AS max_std
+FROM course
+GROUP BY instructor;
+
+-- 5. List all instructors and categorize their total student load.
+SELECT instructor,
+       SUM(students_enrolled) AS total_std,
+       CASE
+         WHEN SUM(students_enrolled) > 1500 THEN 'High Load'
+         WHEN SUM(students_enrolled) BETWEEN 800 AND 1500 THEN 'Medium Load'
+         ELSE 'Low Load'
+       END AS load_category
+FROM course
+GROUP BY instructor;
+
+-- 6. Display instructors who teach more than 2 courses and have an average of less than 550 students.
+SELECT instructor,
+       COUNT(*) AS total_courses,
+       AVG(students_enrolled) AS avg_std
+FROM course
+GROUP BY instructor
+HAVING COUNT(*) > 2
+   AND AVG(students_enrolled) < 550;
+
+-- 7. List instructors whose total enrolled students is less than the average number of students across all courses.
+SELECT instructor,
+       SUM(students_enrolled) AS total_std
+FROM course
+GROUP BY instructor
+HAVING SUM(students_enrolled) < (
+    SELECT AVG(students_enrolled) FROM course
+);
+
+-- 8. Find instructors who have at least one course with fewer students than the smallest enrollment number of any course.
+SELECT DISTINCT instructor
+FROM course
+WHERE students_enrolled < (
+    SELECT MIN(students_enrolled) FROM course
+);
+
+-- 9. Identify the instructor(s) with the highest number of students in a single course.
+SELECT instructor, course, students_enrolled
+FROM course
+WHERE students_enrolled = (
+    SELECT MAX(students_enrolled) FROM course
+);
+
+-- 10. Rank instructors based on total number of students they’ve taught (only show top 3).
+SELECT instructor,
+       SUM(students_enrolled) AS total_std
+FROM course
+GROUP BY instructor
+ORDER BY total_std DESC
+LIMIT 3;
