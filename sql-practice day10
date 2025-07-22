@@ -1,0 +1,17 @@
+SELECT 
+    instructor, 
+    COUNT(*) AS total_course,
+    SUM(students_enrolled) AS total_std,
+    AVG(students_enrolled) AS avg_std
+FROM course
+GROUP BY instructor
+HAVING 
+    COUNT(*) > 3
+    AND SUM(students_enrolled) > (
+        SELECT AVG(total_students) FROM (
+            SELECT SUM(students_enrolled) AS total_students
+            FROM course
+            GROUP BY instructor
+        ) AS subquery
+    );
+
