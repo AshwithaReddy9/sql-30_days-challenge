@@ -1,0 +1,38 @@
+learnt syntax for all types joins and practiced inner join question using student table & enrollment table
+
+  //inner join
+SELECT s.student_id, s.name, e.course
+FROM student s
+INNER JOIN enrollment e
+ON s.student_id = e.student_id;
+
+//left joni
+
+SELECT s.student_id, s.name, e.course
+FROM student s
+LEFT JOIN enrollment e
+ON s.student_id = e.student_id;
+
+//right join
+SELECT s.student_id, s.name, e.course
+FROM student s
+RIGHT JOIN enrollment e
+ON s.student_id = e.student_id;
+
+//full outer join
+SELECT s.student_id, s.name, e.course
+FROM student s
+FULL OUTER JOIN enrollment e
+ON s.student_id = e.student_id;
+
+//cross join 
+SELECT s.student_id, s.name, e.course
+FROM student s
+CROSS JOIN enrollment e;
+  
+  
+ //inner join practice problem 
+  SELECT s.student_id, s.name, e.course
+FROM student s
+INNER JOIN enrollment e
+ON s.student_id = e.student_id;
