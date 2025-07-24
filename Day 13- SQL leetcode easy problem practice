@@ -1,0 +1,12 @@
+182. Duplicate Emails
+
+sloving the same problem in three methods
+
+1) select distinct email
+    from person 
+    group by email
+    having count(*)>1;
+2) select DIsTINCT p.email
+     from person AS P 
+    JOIN Persons AS V
+    ON P.email = V.email AND P.Id != V.ID
