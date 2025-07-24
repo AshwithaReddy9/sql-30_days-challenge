@@ -1,0 +1,30 @@
+Leetcode problem 
+
+
+
+
+
+CREATE TABLE person (
+    personID INT,
+    lastName VARCHAR(90),
+    firstName VARCHAR(90)
+);
+
+INSERT INTO person VALUES
+    (1, 'Wang', 'Allen'),
+    (2, 'Alice', 'Bob');
+
+CREATE TABLE Address (
+    addressid INT,
+    personid INT,
+    city VARCHAR(90),
+    state VARCHAR(90)
+);
+
+INSERT INTO Address VALUES
+    (1, 2, 'New York City', 'New York'),
+    (2, 3, 'Leetcode', 'California');
+
+SELECT firstName, lastName, city, state
+FROM person P
+LEFT JOIN Address A ON P.personID = A.personID;
