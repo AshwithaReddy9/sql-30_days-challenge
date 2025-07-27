@@ -5,4 +5,7 @@ from Views
 where author_id= viewer_id
 order by author_id;
 
-
+\\1683. Invalid Tweets
+select tweet_id 
+from Tweets
+where Length(content)> 15;
