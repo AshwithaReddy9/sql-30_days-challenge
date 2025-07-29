@@ -3,3 +3,14 @@
 select tweet_id 
 from Tweets
 where Length(content)> 15;
+
+
+
+
+1581. Customer Who Visited but Did Not Make Any Transactions
+select v.customer_id ,count(*) as count_no_trans
+from visits v 
+left join Transactions a
+on v.visit_id = a.visit_id
+where a.transaction_id is null
+group by v.customer_id;
