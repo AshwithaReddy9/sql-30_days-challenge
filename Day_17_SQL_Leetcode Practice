@@ -1,0 +1,10 @@
+\\ 184 Department Highest salary
+select D.name As Department,E.name As Employee, E.salary As Salary
+from Employee E
+ join Department D on E.departmentId = D.id
+ where(E.departmentId,E.salary) IN (select departmentId,MAX(salary)From Employee group by departmentId );
+
+
+
+
+
