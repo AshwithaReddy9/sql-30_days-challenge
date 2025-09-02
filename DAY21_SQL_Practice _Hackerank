@@ -1,0 +1,9 @@
+// Weather Observation Station 14
+select Truncate(MAX(LAT_N),4)
+from STATION 
+where LAT_N <137.2345;
+
+//Weather Observation Station 15
+select Round(LONG_W,4)
+from STAION
+where LAT_N = (select MAX(LAT_N) from STATION where LAT_N <137.2345);
