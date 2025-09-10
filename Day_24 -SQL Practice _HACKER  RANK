@@ -1,0 +1,9 @@
+// Binary Tree Nodes
+select N,
+case
+      when P is NULL then'root'
+      when N in(select Distinct P from BST where P is not NULL ) then 'Inner'
+      else 'Leaf'
+      end as NodeType
+from BST
+order by N;
