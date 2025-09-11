@@ -1,0 +1,18 @@
+// New Companies
+
+select C.company_code,C.founder,
+    count(DISTINCT L.lead_manager_code)AS  'total number of lead managers',
+    count(DISTINCT S.senior_manager_code)AS 'total number of senior managers', 
+    COUNT(DISTINCT M.manager_code) AS 'total number of managers',
+    count(DISTINCT E.employee_code)AS  'total number of employees'
+    from Company C
+  JOIN  Lead_Manager L
+    on C.company_code = L.company_code
+join senior_manager S
+    on C.company_code = S.company_code
+join Manager M
+    on C.company_code = M.company_code
+join Employee E
+    on C.company_code = E.company_code
+group by C.company_code,C.founder
+order by company_code;
